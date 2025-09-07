@@ -1,8 +1,9 @@
 import React from 'react'
+import LoginPage from './LoginPage'
 
 function SubstarUserInterface() {
   return (
-    <div>Substar User Interface</div>
+    <LoginPage />
   )
 }
 
