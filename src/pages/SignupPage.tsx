@@ -8,7 +8,7 @@ function SignupPage() {
     const [credentials, setCredentials] = useState({
         email: '',
         password: '',
-        username: '',
+        userName: '',
     });
     const handleCredentialsChange = (e: any) => {
         const { name, value } = e.target;
@@ -20,8 +20,8 @@ function SignupPage() {
     const signup = async(e: any) => {
         e.preventDefault();
         try {
-            const { email, password, username } = credentials;
-            const response  = await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/auth/signup`, { email, password, username });
+            const { email, password, userName } = credentials;
+            const response  = await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/auth/signup`, { email, password, userName });
             navigate('/categories');
         } catch (error) {
             console.log('Signup failed', error);
@@ -36,7 +36,7 @@ function SignupPage() {
             </Typography>
             <TextField name='email' value={credentials.email} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='Email address' type='email' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
             <TextField name='password' value={credentials.password} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='Password' type='password' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
-            <TextField name='username'  value={credentials.username} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='Username' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
+            <TextField name='userName'  value={credentials.userName} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='username' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
             <Button onClick={signup} fullWidth variant='contained' size='small' sx={{ mt: 1, backgroundColor: '#4a5df9' }}>
                 <Typography textTransform='initial' variant='button'>Sign Up</Typography>
             </Button>
