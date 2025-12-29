@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Chip, Typography } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function CategoriesPage() {
+    const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     useEffect(() => {
       const getUserCategories = async() => {
@@ -25,7 +27,7 @@ function CategoriesPage() {
     <div>
         <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>Categories</Typography>
         { categories.map((category: string) => (
-          <Chip key={category} label={category} component="a" variant="outlined" clickable sx={{ color: '#ffffff', ml: 1 }} />
+          <Chip key={category} label={category} component="a" variant="outlined" clickable sx={{ color: '#ffffff', ml: 1 }} onClick={() => navigate(`subscriptions/${category}`)} />
         ))}
     </div>
   )
