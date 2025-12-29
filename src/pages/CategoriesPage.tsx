@@ -27,7 +27,7 @@ function CategoriesPage() {
     <div>
         <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>Categories</Typography>
         { categories.map((category: string) => (
-          <Chip key={category} label={category} component="a" variant="outlined" clickable sx={{ color: '#ffffff', ml: 1 }} onClick={() => navigate(`subscriptions/${category}`)} />
+          <Chip key={category} label={category} variant="outlined" clickable sx={{ color: '#ffffff', ml: 1 }} onClick={() => navigate(`/subscriptions/${encodeURIComponent(category)}`)} />
         ))}
     </div>
   )
