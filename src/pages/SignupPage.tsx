@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router'
 import axios from 'axios';
@@ -21,7 +21,7 @@ function SignupPage() {
         e.preventDefault();
         try {
             const { email, password, userName } = credentials;
-            const response  = await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/auth/signup`, { email, password, userName });
+            await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/auth/signup`, { email, password, userName });
             navigate('/categories');
         } catch (error) {
             console.log('Signup failed', error);
