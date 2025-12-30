@@ -3,7 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, Typography } 
 
 function Subscription({ sub }: any) {
   return (
-    <Accordion key={sub.subscriptionId} sx={{ backgroundColor: '#000000', color: '#ffffff', mb: 1 }}>
+    <Accordion sx={{ backgroundColor: '#000000', color: '#ffffff', mb: 1 }}>
         <AccordionSummary>
           <Typography component="span">{sub.serviceName}</Typography>
         </AccordionSummary>
