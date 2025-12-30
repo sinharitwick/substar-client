@@ -32,17 +32,29 @@ function SubscriptionsPage() {
     }
     useEffect(() => {
         getSubscriptions();
-    }, [params.category])
+    }, [params.category]);
+    const handleDeleteSubscription = async (subscriptionId: string) => {
+    try {
+            await axios.delete(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/subscriptions/${subscriptionId}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+            }
+            });
+            setSubscriptions((prev: any) => prev.filter((s: { subscriptionId: string; }) => s.subscriptionId !== subscriptionId));
+        } catch (error) {
+            console.log('Failed to delete subscription', error);
+        }
+    }
   return (
     <div>
         <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}> {params.category} Subscriptions</Typography>
         { subscriptions.map((sub: any) => (
-            <Subscription key={sub.subscriptionId} sub={sub} />
+            <Subscription key={sub.subscriptionId} sub={sub} onDelete={() => handleDeleteSubscription(sub.subscriptionId)} />
         ))}
         <Fab onClick={() => setOpen(true)} size="small" color="primary" aria-label="add" sx={{ fontSize: 24 }}>
             +
         </Fab>
-        <SubscriptionDialog open={open} onClose={handleClose} category={params.category} onSuccess={getSubscriptions} />
+        <SubscriptionDialog open={open} onClose={handleClose} category={params.category} onSuccess={getSubscriptions} showCategoryInput={false} />
     </div>
   )
 }

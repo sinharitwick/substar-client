@@ -5,10 +5,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
 import axios from 'axios'
 
-function SubscriptionDialog({ open, onClose, category, onSuccess }: any) {
+function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryInput }: any) {
     const [subscriptionDetails, setSubscriptionDetails] = useState({
         serviceName: '',
         cost: '',
+        category: category || '',
         billingCycle: 'MONTHLY',
         status: 'ACTIVE',
         renewalDate: dayjs(),
@@ -29,9 +30,8 @@ function SubscriptionDialog({ open, onClose, category, onSuccess }: any) {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/subscriptions`, {
+            await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/subscriptions`, {
                 ...subscriptionDetails,
-                category,
                 cost: parseFloat(subscriptionDetails.cost),
                 renewalDate: subscriptionDetails.renewalDate.format('YYYY-MM-DDTHH:mm:ss[Z]'),
             }, {
@@ -40,8 +40,9 @@ function SubscriptionDialog({ open, onClose, category, onSuccess }: any) {
                 }
             });
             setSubscriptionDetails({
-                 serviceName: '',
+                serviceName: '',
                 cost: '',
+                category: category || '',
                 billingCycle: 'MONTHLY',
                 status: 'ACTIVE',
                 renewalDate: dayjs(),
@@ -84,6 +85,21 @@ function SubscriptionDialog({ open, onClose, category, onSuccess }: any) {
                         value={subscriptionDetails.cost}
                         onChange={handleInputChange}
                     />
+                    { showCategoryInput && (
+                        <TextField
+                            autoFocus
+                            required
+                            fullWidth
+                            margin="dense"
+                            id="category"
+                            name="category"
+                            label="Category"
+                            type="text"
+                            variant="standard"
+                            value={subscriptionDetails.category}
+                            onChange={handleInputChange}
+                        />
+                    )}
                     <Select
                         name="billingCycle"
                         label="Billing Cycle"
