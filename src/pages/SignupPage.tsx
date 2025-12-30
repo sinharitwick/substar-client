@@ -22,7 +22,7 @@ function SignupPage() {
         try {
             const { email, password, userName } = credentials;
             await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/auth/signup`, { email, password, userName });
-            navigate('/categories');
+            navigate('/');
         } catch (error) {
             console.log('Signup failed', error);
         }
