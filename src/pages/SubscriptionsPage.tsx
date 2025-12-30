@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Fab, Typography } from '@mui/material';
 import { useParams } from 'react-router';
@@ -9,9 +9,6 @@ function SubscriptionsPage() {
     let params = useParams();
     const [subscriptions, setSubscriptions] = useState([]);
     const [open, setOpen] = useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    }
     const handleClose = () => {
         setOpen(false);
     }

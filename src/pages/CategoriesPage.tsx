@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Chip, Fab, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
@@ -8,9 +8,6 @@ function CategoriesPage() {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<string[]>([]);
     const [open, setOpen] = useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    }
     const handleClose = () => {
         setOpen(false);
     }
