@@ -3,6 +3,7 @@ import { Box, Chip, Fab, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import SubscriptionDialog from '../components/SubscriptionDialog';
+import Navbar from '../components/Navbar';
 
 function CategoriesPage() {
     const navigate = useNavigate();
@@ -29,23 +30,26 @@ function CategoriesPage() {
       getUserCategories();
     }, []);
   return (
-    <div>
-        { categories.length > 0 && (
-          <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>Your Categories</Typography>
-        )}
-        { categories.map((category: string) => (
-          <Chip key={category} label={category} variant="outlined" clickable sx={{ color: '#ffffff', ml: 1 }} onClick={() => navigate(`/subscriptions/${encodeURIComponent(category)}`)} />
-        ))}
-        { categories.length === 0 && (
-          <Box>
-            <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>New to Substar? Get started by adding a subscription entry</Typography>
-            <Fab onClick={() => setOpen(true)} size="small" color="primary" aria-label="add" sx={{ fontSize: 24 }}>
-              +
-            </Fab>
-          </Box>
-        )}
-        <SubscriptionDialog open={open} onClose={handleClose} onSuccess={getUserCategories} showCategoryInput={true} />
-    </div>
+    <>
+      <Navbar />
+      <Box>
+          { categories.length > 0 && (
+            <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>Your Categories</Typography>
+          )}
+          { categories.map((category: string) => (
+            <Chip key={category} label={category} variant="outlined" clickable sx={{ color: 'inherit', ml: 1 }} onClick={() => navigate(`/subscriptions/${encodeURIComponent(category)}`)} />
+          ))}
+          { categories.length === 0 && (
+            <Box>
+              <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>New to Substar? Get started by adding a subscription entry</Typography>
+              <Fab onClick={() => setOpen(true)} size="small" color="primary" aria-label="add" sx={{ fontSize: 24 }}>
+                +
+              </Fab>
+            </Box>
+          )}
+          <SubscriptionDialog open={open} onClose={handleClose} onSuccess={getUserCategories} showCategoryInput={true} />
+      </Box>
+    </>
   )
 }
 

@@ -4,6 +4,7 @@ import { Fab, Typography } from '@mui/material';
 import { useParams } from 'react-router';
 import Subscription from '../components/Subscription';
 import SubscriptionDialog from '../components/SubscriptionDialog';
+import Navbar from '../components/Navbar';
 
 function SubscriptionsPage() {
     let params = useParams();
@@ -43,16 +44,17 @@ function SubscriptionsPage() {
         }
     }
   return (
-    <div>
+    <>
+        <Navbar />
         <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}> {params.category} Subscriptions</Typography>
         { subscriptions.map((sub: any) => (
             <Subscription key={sub.subscriptionId} sub={sub} onDelete={() => handleDeleteSubscription(sub.subscriptionId)} />
         ))}
-        <Fab onClick={() => setOpen(true)} size="small" color="primary" aria-label="add" sx={{ fontSize: 24 }}>
+        <Fab onClick={() => setOpen(true)} size="small" aria-label="add" sx={{ fontSize: 24 }}>
             +
         </Fab>
         <SubscriptionDialog open={open} onClose={handleClose} category={params.category} onSuccess={getSubscriptions} showCategoryInput={false} />
-    </div>
+    </>
   )
 }
 
