@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Button, Dialog, DialogContent, DialogTitle, MenuItem, Select, TextField } from '@mui/material'
+import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
@@ -55,10 +55,10 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
     }
   return (
     <Dialog open={open} onClose={onClose}>
-        <DialogTitle sx={{ backgroundColor: '#000000', color: '#ffffff' }}>Add Subscription</DialogTitle>
+        <DialogTitle sx={{ fontFamily: 'monospace' }}>Add Subscription</DialogTitle>
         <DialogContent>
             <form onSubmit={handleSubmit}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <TextField
                         autoFocus
                         required
@@ -68,7 +68,8 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                         name="serviceName"
                         label="Name"
                         type="text"
-                        variant="standard"
+                        variant="outlined"
+                        size="small"
                         value={subscriptionDetails.serviceName}
                         onChange={handleInputChange}
                     />
@@ -76,12 +77,12 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                         autoFocus
                         required
                         fullWidth
-                        margin="dense"
                         id="cost"
                         name="cost"
                         label="Cost (₹)"
                         type="number"
-                        variant="standard"
+                        variant="outlined"
+                        size="small"
                         value={subscriptionDetails.cost}
                         onChange={handleInputChange}
                     />
@@ -90,7 +91,6 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                             autoFocus
                             required
                             fullWidth
-                            margin="dense"
                             id="category"
                             name="category"
                             label="Category"
@@ -100,31 +100,41 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                             onChange={handleInputChange}
                         />
                     )}
-                    <Select
-                        name="billingCycle"
-                        label="Billing Cycle"
-                        value={subscriptionDetails.billingCycle}
-                        onChange={handleInputChange}
-                    >
-                        <MenuItem value={"MONTHLY"}>Monthly</MenuItem>
-                        <MenuItem value={"YEARLY"}>Yearly</MenuItem>
-                    </Select>
-                    <Select
-                        name="status"
-                        label="Status"
-                        value={subscriptionDetails.status}
-                        onChange={handleInputChange}
-                    >
-                        <MenuItem value={"ACTIVE"}>Active</MenuItem>
-                        <MenuItem value={"INACTIVE"}>Inactive</MenuItem>
-                        <MenuItem value={"CANCELLED"}>Cancelled</MenuItem>
-                    </Select>
+                    <FormControl fullWidth>
+                        <InputLabel id="billingCycle-select-label">Billing Cycle</InputLabel>
+                        <Select
+                            labelId="billingCycle-select-label"
+                            name="billingCycle"
+                            label="Billing Cycle"
+                            size="small"
+                            value={subscriptionDetails.billingCycle}
+                            onChange={handleInputChange}
+                        >
+                            <MenuItem value={"MONTHLY"}>Monthly</MenuItem>
+                            <MenuItem value={"YEARLY"}>Yearly</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <InputLabel id="status-select-label">Status</InputLabel>
+                        <Select
+                            labelId="status-select-label"
+                            name="status"
+                            label="Status"
+                            size="small"
+                            value={subscriptionDetails.status}
+                            onChange={handleInputChange}
+                        >
+                            <MenuItem value={"ACTIVE"}>Active</MenuItem>
+                            <MenuItem value={"INACTIVE"}>Inactive</MenuItem>
+                            <MenuItem value={"CANCELLED"}>Cancelled</MenuItem>
+                        </Select>
+                    </FormControl>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker label="Renewal Date" value={subscriptionDetails.renewalDate} onChange={handleDateChange} />
+                        <DatePicker label="Renewal Date" value={subscriptionDetails.renewalDate} onChange={handleDateChange} slotProps={{ textField: { size: 'small' } }} />
                     </LocalizationProvider>
                     <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-                        <Button onClick={onClose} variant='contained' color='error'>Cancel</Button>
-                        <Button type='submit' variant='contained'>Add</Button>
+                        <Button onClick={onClose} variant='contained' color='error' sx={{ fontFamily: 'monospace' }}>Cancel</Button>
+                        <Button type='submit' variant='contained' sx={{ fontFamily: 'monospace' }}>Add</Button>
                     </Box>
                 </Box>
             </form>
