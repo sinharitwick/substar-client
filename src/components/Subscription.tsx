@@ -1,11 +1,12 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, IconButton, Typography } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ExpandMore } from '@mui/icons-material';
 
 function Subscription({ sub, onOpenEditDialog, onDelete }: any) {
   return (
     <Accordion sx={{ backgroundColor: 'inherit', color: 'inherit', mb: 1 }}>
-        <AccordionSummary>
+        <AccordionSummary expandIcon={<ExpandMore />}>
           <Typography component="span" sx={{ fontFamily: 'monospace' }}>{sub.serviceName}</Typography>
         </AccordionSummary>
         <AccordionDetails>
