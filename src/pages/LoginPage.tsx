@@ -37,7 +37,7 @@ function LoginPage() {
         </Grid>
         <Grid display= 'flex' flexDirection='column' p={2} justifyContent='center' alignItems='flex-start'>
             <Typography fontWeight='bold' variant='h3' sx={{ fontFamily: 'monospace', mb: 4 }}>Substar</Typography>
-            <TextField name='email' value={credentials.email} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} margin='none' label='Email address' type='email' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
+            <TextField autoFocus name='email' value={credentials.email} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} margin='none' label='Email address' type='email' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
             <TextField name='password' value={credentials.password} onChange={handleCredentialsChange}  sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} margin='dense' label='Password' type='password' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
             <Button onClick={login} fullWidth variant='contained' size='small' sx={{ mt: 1, backgroundColor: '#4a5df9' }}>
                 <Typography textTransform='initial' variant='button'>Log in</Typography>

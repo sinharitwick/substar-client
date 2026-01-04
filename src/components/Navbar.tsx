@@ -11,7 +11,7 @@ function Navbar() {
   return (
     <AppBar position='fixed' color='transparent' elevation={0} sx={{ textAlign: 'left' }}>
         <Toolbar>
-            <Typography fontWeight='bold' variant='h6' component='div' sx={{ fontFamily: 'monospace', flexGrow: 1}}>
+            <Typography fontWeight='bold' variant='h6' onClick={() => {navigate('/categories')}} sx={{ fontFamily: 'monospace', flexGrow: 1, cursor: 'pointer' }}>
                 Substar
             </Typography>
             <IconButton onClick={handleLogout} color='inherit'>

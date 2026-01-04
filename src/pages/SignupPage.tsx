@@ -34,7 +34,7 @@ function SignupPage() {
             <Typography variant='body1' sx={{ mb: 2 }}>
                 Sign up to manage all your subscriptions
             </Typography>
-            <TextField name='email' value={credentials.email} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='Email address' type='email' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
+            <TextField autoFocus name='email' value={credentials.email} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='Email address' type='email' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
             <TextField name='password' value={credentials.password} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='Password' type='password' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
             <TextField name='userName'  value={credentials.userName} onChange={handleCredentialsChange} sx={{ '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'silver' } } }} fullWidth margin='dense' label='username' size='small' required slotProps={{ input: { style: { color: 'inherit' } }, inputLabel: { style: { color: 'inherit' } } }} />
             <Button onClick={signup} fullWidth variant='contained' size='small' sx={{ mt: 1, backgroundColor: '#4a5df9' }}>

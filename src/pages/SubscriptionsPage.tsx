@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import Subscription from '../components/Subscription';
 import SubscriptionDialog from '../components/SubscriptionDialog';
 import Navbar from '../components/Navbar';
+import { toast } from 'react-toastify';
 
 function SubscriptionsPage() {
     let params = useParams();
@@ -39,8 +40,10 @@ function SubscriptionsPage() {
             }
             });
             setSubscriptions((prev: any) => prev.filter((s: { subscriptionId: string; }) => s.subscriptionId !== subscriptionId));
+            toast.success("Subscription deleted successfully");
         } catch (error) {
-            console.log('Failed to delete subscription', error);
+            console.error(error);
+            toast.error("Failed to delete subscription");
         }
     }
   return (
