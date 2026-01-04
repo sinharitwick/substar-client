@@ -10,7 +10,18 @@ import { toast } from 'react-toastify';
 function SubscriptionsPage() {
     let params = useParams();
     const [subscriptions, setSubscriptions] = useState([]);
+    const [selectedSubscription, setSelectedSubscription] = useState<any>(null);
     const [open, setOpen] = useState(false);
+    const [mode, setMode] = useState('create');
+    const handleAddOpen = () => {
+        setMode('create');
+        setOpen(true);
+    }
+    const handleEditOpen = (sub :any) => {
+        setSelectedSubscription(sub);
+        setMode('update');
+        setOpen(true);
+    }
     const handleClose = () => {
         setOpen(false);
     }
@@ -51,12 +62,12 @@ function SubscriptionsPage() {
         <Navbar />
         <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}> {params.category} Subscriptions</Typography>
         { subscriptions.map((sub: any) => (
-            <Subscription key={sub.subscriptionId} sub={sub} onDelete={() => handleDeleteSubscription(sub.subscriptionId)} />
+            <Subscription key={sub.subscriptionId} sub={sub} onOpenEditDialog={() => handleEditOpen(sub)} onDelete={() => handleDeleteSubscription(sub.subscriptionId)} />
         ))}
-        <Fab onClick={() => setOpen(true)} size="small" aria-label="add" sx={{ fontSize: 24 }}>
+        <Fab onClick={handleAddOpen} size="small" aria-label="add" sx={{ fontSize: 24 }}>
             +
         </Fab>
-        <SubscriptionDialog open={open} onClose={handleClose} category={params.category} onSuccess={getSubscriptions} showCategoryInput={false} />
+        <SubscriptionDialog subscription={selectedSubscription} mode={mode} open={open} onClose={handleClose} category={params.category} onSuccess={getSubscriptions} showCategoryInput={false} />
     </>
   )
 }
