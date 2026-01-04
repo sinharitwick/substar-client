@@ -119,7 +119,8 @@ function SubscriptionDialog({ subscription, mode, open, onClose, category, onSuc
                             name="category"
                             label="Category"
                             type="text"
-                            variant="standard"
+                            variant="outlined"
+                            size="small"
                             value={subscriptionDetails.category}
                             onChange={handleInputChange}
                         />

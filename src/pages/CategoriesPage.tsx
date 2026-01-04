@@ -9,6 +9,11 @@ function CategoriesPage() {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<string[]>([]);
     const [open, setOpen] = useState(false);
+    const [mode, setMode] = useState('create');
+    const handleAddOpen = () => {
+        setMode('create');
+        setOpen(true);
+    }
     const handleClose = () => {
         setOpen(false);
     }
@@ -40,14 +45,14 @@ function CategoriesPage() {
             <Chip key={category} label={category} variant="outlined" clickable sx={{ color: 'inherit', ml: 1 }} onClick={() => navigate(`/subscriptions/${encodeURIComponent(category)}`)} />
           ))}
           { categories.length === 0 && (
-            <Box>
-              <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>New to Substar? Get started by adding a subscription entry</Typography>
-              <Fab onClick={() => setOpen(true)} size="small" color="primary" aria-label="add" sx={{ fontSize: 24 }}>
-                +
-              </Fab>
-            </Box>
+            <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>New to Substar? Get started by adding a subscription entry</Typography>
           )}
-          <SubscriptionDialog open={open} onClose={handleClose} onSuccess={getUserCategories} showCategoryInput={true} />
+          <Box>
+            <Fab onClick={handleAddOpen} size="small" aria-label="add" sx={{ mt: 2, fontSize: 24 }}>
+              +
+            </Fab>
+          </Box>
+          <SubscriptionDialog mode={mode} open={open} onClose={handleClose} onSuccess={getUserCategories} showCategoryInput={true} />
       </Box>
     </>
   )

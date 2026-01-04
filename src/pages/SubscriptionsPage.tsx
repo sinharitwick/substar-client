@@ -60,11 +60,11 @@ function SubscriptionsPage() {
   return (
     <>
         <Navbar />
-        <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}> {params.category} Subscriptions</Typography>
+        <Typography fontWeight='bold' variant='h6' sx={{ fontFamily: 'monospace', mb: 4 }}>Your {params.category} Subscriptions</Typography>
         { subscriptions.map((sub: any) => (
             <Subscription key={sub.subscriptionId} sub={sub} onOpenEditDialog={() => handleEditOpen(sub)} onDelete={() => handleDeleteSubscription(sub.subscriptionId)} />
         ))}
-        <Fab onClick={handleAddOpen} size="small" aria-label="add" sx={{ fontSize: 24 }}>
+        <Fab onClick={handleAddOpen} size="small" aria-label="add" sx={{ mt: 2, fontSize: 24 }}>
             +
         </Fab>
         <SubscriptionDialog subscription={selectedSubscription} mode={mode} open={open} onClose={handleClose} category={params.category} onSuccess={getSubscriptions} showCategoryInput={false} />
