@@ -74,7 +74,6 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                         onChange={handleInputChange}
                     />
                     <TextField
-                        autoFocus
                         required
                         fullWidth
                         id="cost"
@@ -88,7 +87,6 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                     />
                     { showCategoryInput && (
                         <TextField
-                            autoFocus
                             required
                             fullWidth
                             id="category"
