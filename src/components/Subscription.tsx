@@ -1,10 +1,12 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, IconButton, Typography } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ExpandMore } from '@mui/icons-material';
 
-function Subscription({ sub, onDelete }: any) {
+function Subscription({ sub, onOpenEditDialog, onDelete }: any) {
   return (
     <Accordion sx={{ backgroundColor: 'inherit', color: 'inherit', mb: 1 }}>
-        <AccordionSummary>
+        <AccordionSummary expandIcon={<ExpandMore />}>
           <Typography component="span" sx={{ fontFamily: 'monospace' }}>{sub.serviceName}</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -19,6 +21,9 @@ function Subscription({ sub, onDelete }: any) {
               <Typography component="span" sx={{ fontFamily: 'monospace' }}>Renewal: {sub.renewalDate.slice(0, 10)}</Typography>
             </Box>
             <Box>
+              <IconButton onClick={onOpenEditDialog} size='small' color='inherit'>
+                <EditIcon />
+              </IconButton>
               <IconButton onClick={onDelete} size='small' color='error'>
                 <DeleteIcon />
               </IconButton>

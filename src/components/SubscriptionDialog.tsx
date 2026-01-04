@@ -1,20 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Button, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+dayjs.extend(utc);
 
-function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryInput }: any) {
-    const [subscriptionDetails, setSubscriptionDetails] = useState({
+function SubscriptionDialog({ subscription, mode, open, onClose, category, onSuccess, showCategoryInput }: any) {
+    const initialSubscription = (category: string) => ({
         serviceName: '',
         cost: '',
         category: category || '',
         billingCycle: 'MONTHLY',
         status: 'ACTIVE',
         renewalDate: dayjs(),
-    });
+    })
+    const [subscriptionDetails, setSubscriptionDetails] = useState(initialSubscription(category));
+    useEffect(() => {
+        if (mode === 'update' && subscription) {
+            setSubscriptionDetails({
+                serviceName: subscription.serviceName,
+                cost: subscription.cost,
+                category: subscription.category,
+                billingCycle: subscription.billingCycle,
+                status: subscription.status,
+                renewalDate: dayjs.utc(subscription.renewalDate).local(),
+            });
+        } else {
+            setSubscriptionDetails(initialSubscription(category));
+        }
+    }, [subscription, mode]);
     const handleInputChange = (e: any) => {
         const {name, value} = e.target;
         setSubscriptionDetails(prevState => ({
@@ -31,39 +48,45 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/subscriptions`, {
-                ...subscriptionDetails,
-                cost: parseFloat(subscriptionDetails.cost),
-                renewalDate: subscriptionDetails.renewalDate.format('YYYY-MM-DDTHH:mm:ss[Z]'),
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('auth-token')}`,
-                }
-            });
-            toast.success("Subscription added successfully");
-            setSubscriptionDetails({
-                serviceName: '',
-                cost: '',
-                category: category || '',
-                billingCycle: 'MONTHLY',
-                status: 'ACTIVE',
-                renewalDate: dayjs(),
-            });
+            if (mode === 'create') {
+                await axios.post(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/subscriptions`, {
+                    ...subscriptionDetails,
+                    cost: parseFloat(subscriptionDetails.cost),
+                    renewalDate: subscriptionDetails.renewalDate.utc().format(),
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`,
+                    }
+                });
+                setSubscriptionDetails(initialSubscription(category));
+            }
+            else {
+                await axios.put(`${import.meta.env.VITE_SUBSTAR_API_BASE_URL}/subscriptions/${subscription.subscriptionId}`, {
+                    ...subscriptionDetails,
+                    cost: parseFloat(subscriptionDetails.cost),
+                    renewalDate: subscriptionDetails.renewalDate.utc().format(),
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`,
+                    }
+                });
+            }
+            toast.success(mode === 'create' ? "Subscription added successfully" : "Subscription updated successfully");
             onSuccess();
             onClose();
         } catch (error) {
             console.error(error);
-            toast.error("Failed to add subscription");
+            toast.error(mode === 'create' ? "Failed to add subscription" : "Failed to update subscription");
         }
     }
   return (
     <Dialog open={open} onClose={onClose}>
-        <DialogTitle sx={{ fontFamily: 'monospace' }}>Add Subscription</DialogTitle>
+        <DialogTitle sx={{ fontFamily: 'monospace' }}>{ mode === 'create' ? 'Add Subscription' : `Edit ${subscriptionDetails.serviceName}` }</DialogTitle>
         <DialogContent>
             <form onSubmit={handleSubmit}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <TextField
-                        autoFocus
+                        autoFocus={mode === 'create'}
                         required
                         fullWidth
                         margin="dense"
@@ -96,7 +119,8 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                             name="category"
                             label="Category"
                             type="text"
-                            variant="standard"
+                            variant="outlined"
+                            size="small"
                             value={subscriptionDetails.category}
                             onChange={handleInputChange}
                         />
@@ -135,7 +159,7 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                     </LocalizationProvider>
                     <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
                         <Button onClick={onClose} variant='contained' color='error' sx={{ fontFamily: 'monospace' }}>Cancel</Button>
-                        <Button type='submit' variant='contained' sx={{ fontFamily: 'monospace' }}>Add</Button>
+                        <Button type='submit' variant='contained' sx={{ fontFamily: 'monospace' }}>{ mode === 'create' ? 'Add' : 'Update' }</Button>
                     </Box>
                 </Box>
             </form>
