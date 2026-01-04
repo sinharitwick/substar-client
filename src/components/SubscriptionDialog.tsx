@@ -4,6 +4,7 @@ import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import dayjs from 'dayjs'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryInput }: any) {
     const [subscriptionDetails, setSubscriptionDetails] = useState({
@@ -39,6 +40,7 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                     Authorization: `Bearer ${localStorage.getItem('auth-token')}`,
                 }
             });
+            toast.success("Subscription added successfully");
             setSubscriptionDetails({
                 serviceName: '',
                 cost: '',
@@ -47,10 +49,11 @@ function SubscriptionDialog({ open, onClose, category, onSuccess, showCategoryIn
                 status: 'ACTIVE',
                 renewalDate: dayjs(),
             });
-            onClose();
             onSuccess();
+            onClose();
         } catch (error) {
-            console.log('Failed to add subscription', error);
+            console.error(error);
+            toast.error("Failed to add subscription");
         }
     }
   return (
